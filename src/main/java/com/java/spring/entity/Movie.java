@@ -11,6 +11,7 @@ import javax.validation.constraints.Positive;
 @Data
 @Entity
 //@Table(name = "MOVIE_TABLE") // - @Table - дозволяє створити таблицю з іменем яке нам потрібно
+
 public class Movie {
 
     @Id

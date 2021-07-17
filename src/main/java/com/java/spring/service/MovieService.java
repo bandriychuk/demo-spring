@@ -14,4 +14,5 @@ public interface MovieService {
 
     Movie createMovie(Movie movie);
 
+    Movie getMovieById(int id);
 }

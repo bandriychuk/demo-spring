@@ -14,9 +14,12 @@ import java.util.List;
 
 @RestController// Щоб клас почав, хендлити реквести ставимо аннотацію @RestController
 @RequiredArgsConstructor
+@RequestMapping(value = "/movie")
 public class MovieController {
 
     //Обєкти в Spring називаються Bean;
+    // На одному контроллері не може бути два одинакових методи, які реагують на одну URL і га один HTTP метод
+
 
     @Autowired
     private MovieServiceImpl movieService;
@@ -25,20 +28,24 @@ public class MovieController {
     private MovieValidator movieValidator;
 
     //    @RequestMapping(value = "/movie", method = RequestMethod.GET)
-    @GetMapping(value = "/movie")
+    @GetMapping
     public List<Movie> getMovies() {
         return movieService.getAllMovies();
-
     }
 
-    @PostMapping(value = "/movie")
+    @GetMapping("/{id}")
+    public Movie getMovieById(@PathVariable int id){
+        return movieService.getMovieById(id);
+    }
+
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Movie insertMovie(@RequestBody @Valid Movie movie) {
         return movieService.createMovie(movie);
         //Перед передачею обєкта на DAO обєкт повинен бути провалідований
     }
 
-    @PutMapping(value = "/movie/{id}")
+    @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Movie updateMovie(@PathVariable int id, @RequestBody Movie movie) {
 //        final Optional<Movie> first = movies.stream()
@@ -55,7 +62,7 @@ public class MovieController {
 
     }
 
-    @DeleteMapping(value = "/movie/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMovie(@PathVariable int id) {
 //        final boolean isRemoved = movies.removeIf(movie -> movie.getId() == id);
@@ -67,10 +74,10 @@ public class MovieController {
         movieService.deleteMovie(id);
     }
 
-    @InitBinder// Звязує наш контроллер з валідаторами
-    public void initBinder(WebDataBinder dataBinder){
-        dataBinder.addValidators(movieValidator);
-    }
+//    @InitBinder// Звязує наш контроллер з валідаторами
+//    public void initBinder(WebDataBinder dataBinder){
+//        dataBinder.addValidators(movieValidator);
+//    }
 
     //Spring - бери валідатори з 2 місці 1 - де ми самі написали (initBinder), 2 - З класу де ми поставили різні аннотації
 

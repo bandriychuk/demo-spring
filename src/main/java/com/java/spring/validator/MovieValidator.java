@@ -19,12 +19,12 @@ public class MovieValidator implements Validator {
     public void validate(Object o, Errors errors) {
         Movie movie = (Movie) o;
 //        if (StringUtils.isBlank(movie.getTitle())) {
-//            errors.rejectValue("tittle", "movie.title.capital-latter",
+//            errors.rejectValue("title", "movie.title.capital-latter",
 //                    "Movie title should not be blank!");
 //        }
 //
             if (StringUtils.isNotBlank(movie.getTitle()) && !CharUtils.isAsciiAlphaUpper(movie.getTitle().charAt(0))) {
-            errors.rejectValue("tittle", "movie.title.capital-latter",
+            errors.rejectValue("title", "movie.title.capital-latter",
                     "Movie title should start with capital latter");
         }
     }
